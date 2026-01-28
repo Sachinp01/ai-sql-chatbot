@@ -1,0 +1,83 @@
+{
+  "database": "chatbot_db",
+  "tables": {
+    "loans": {
+      "description": "Table storing loan applications and disbursement details for users",
+      "columns": {
+        "id": {
+          "type": "INTEGER",
+          "nullable": false
+        },
+        "loan_id": {
+          "type": "INTEGER",
+          "nullable": false
+        },
+        "user_id": {
+          "type": "VARCHAR(64)",
+          "nullable": false
+        },
+        "loan_status": {
+          "type": "VARCHAR(32)",
+          "nullable": false
+        },
+        "net_approved_amount": {
+          "type": "DOUBLE PRECISION",
+          "nullable": true
+        },
+        "loan_disbursement_date": {
+          "type": "TIMESTAMP",
+          "nullable": true
+        },
+        "remark": {
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        "user_reason_decline": {
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        "created_at": {
+          "type": "TIMESTAMP",
+          "nullable": false
+        }
+      },
+      "primary_key": [
+        "id"
+      ]
+    },
+    "users": {
+      "description": "Table storing unique users identified by user_id. One user can have multiple loans.",
+      "columns": {
+        "id": {
+          "type": "INTEGER",
+          "nullable": false
+        },
+        "user_id": {
+          "type": "VARCHAR(64)",
+          "nullable": false
+        },
+        "banking_id": {
+          "type": "VARCHAR(32)",
+          "nullable": true
+        },
+        "created_at": {
+          "type": "TIMESTAMP",
+          "nullable": false
+        }
+      },
+      "primary_key": [
+        "id"
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "from_table": "loans",
+      "from_column": "user_id",
+      "to_table": "users",
+      "to_column": "user_id",
+      "type": "many_to_one",
+      "description": "Each loan belongs to exactly one user. A user can have multiple loans."
+    }
+  ]
+}
